@@ -5,7 +5,7 @@ import BlogLayout from '../../layouts/BlogLayout.astro';
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id.replace(/\.md$/, '') },
     props: { post },
   }));
 }
@@ -15,9 +15,10 @@ interface Props {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
 ---
 
 <BlogLayout post={post}>
-  <Content />
+  <p>{post.data.description}</p>
+  <hr />
+  <p><em>Full article content coming soon. This is a placeholder.</em></p>
 </BlogLayout>
